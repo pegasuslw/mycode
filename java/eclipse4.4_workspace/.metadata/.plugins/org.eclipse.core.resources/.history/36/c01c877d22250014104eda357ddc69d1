@@ -1,6 +1,0 @@
-
-public class Client {
-	public static void main(String[] args){
-		// 求 80万学生的平均分数
-	}
-}
