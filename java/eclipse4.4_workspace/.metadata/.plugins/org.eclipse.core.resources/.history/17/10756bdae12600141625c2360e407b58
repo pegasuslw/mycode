@@ -1,0 +1,11 @@
+import java.io.File;
+
+public class Client {
+	public static void main(String[] args){
+		File dir = new File(".");
+		String[] files = dir.list();
+		for(String name : files){
+			System.out.println(files);
+		}
+	}
+}

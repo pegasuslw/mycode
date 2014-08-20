@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>王圆圆管理</title>
+
+<style>
+
+html,body{
+	min-width:524px;
+	font-family:"宋体",Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height:10px;
+	color:#536492;
+}
+
+input{
+	border:1px solid #BEC5D5;
+	height:15px;
+	width:150px;
+}
+
+
+#total{
+	width:524px;
+	height:300px;
+	text-align: center;
+	position: absolute;
+	padding:0;
+	margin: 0;
+}
+
+
+#head{
+	background-image: url("top.gif");
+	width:524px;
+	height:32px;
+
+	padding-top:22px;
+}
+
+/*button*/
+.button1{
+	background:url(button2.gif);
+	width:81px;
+	height:21px;
+	border:0;
+	color:#676767;
+	margin-right:4px;
+	font-size:12px;
+}
+.button2{
+	background:url(button1.gif);
+	width:81px;
+	height:21px;
+	border:0;
+	color:#676767;
+	margin-right:4px;
+	font-size:12px;
+}
+
+
+#more{
+	text-align: right;
+	padding-top: 6px;
+}
+
+#more a{
+	padding-right: 15px;
+}
+#more a:link{
+	text-decoration: none;
+}
+
+#body{
+	width:524px;
+	height:260px;
+	background-image: url("bg.gif");
+	padding-top: 0px;
+}
+
+#body-left{
+	width:200px;
+	height:259px;
+	padding-left: 0px;
+	text-align: left;
+	float:left;
+}
+
+#body-left img{
+	padding-left: 30px;
+	padding-top: 35px;
+
+}
+
+#body-right{
+	width:294px;
+	height:259px;
+	float:left;
+	text-align: center;
+
+}
+
+#logo{
+	background:url("logo.gif");
+	width:294px;
+	height:50px;
+}
+#login{
+	width:292px;
+	border-bottom:1px #e8e8e8 solid;
+	border-left:1px #e8e8e8 solid;
+	border-right:1px #e8e8e8 solid;
+	text-align:center;
+	height:190px;
+	margin-bottom:5px;
+}
+
+#login table{
+	width:292px;
+	text-align: center;
+}
+
+
+#login-bottom{
+	width:294px;
+	padding-top: 30px;
+	text-align: center;
+}
+
+.login-button{
+	float:left;
+	width:98px;
+	padding-left: 0px;
+}
+
+
+#bottom{
+	width:524px;
+	height:15px;
+	background-image: url("bottom.gif");
+}
+
+#copyright{
+	text-align: right;
+	padding-right: 20px;
+	padding-top: 10px;
+}
+
+#phone{
+	padding-top: 40px;
+}
+
+#line{
+	clear: both;
+	width: 292px;
+	height: 3px;
+
+	text-align:center;
+	padding-top: 10px;
+}
+
+#line br{
+	width: 200;
+	color: #e8e8e8;
+}
+
+#login td{
+	height:30px;
+}
+
+</style>
+
+<script type="text/javascript">
+
+var divWidth = 524;
+var divHeight = 310;
+
+function centerDiv(){
+	var bdwidth = window.innerWidth 
+	            	|| document.documentElement.clientWidth 
+	              	|| document.body.clientWidth;
+	var bdheight = window.innerHeight
+					|| document.documentElement.clientHeight
+					|| document.body.clientHeight;
+	if(bdwidth > divWidth){
+		document.getElementById("total").style.left = (bdwidth-divWidth)/2+"px";
+		//alert(document.getElementById("total").style.left);
+	}
+	else{
+		document.getElementById("total").style.left="0px";
+		//alert(document.getElementById("total").style.left);
+	}
+
+	if(bdheight > 310){
+		document.getElementById("total").style.top = (bdheight-300)/2+"px";
+		//alert(document.getElementById("total").style.top);
+	}else{
+		document.getElementById("total").style.top="0px";	
+	}
+
+}
+
+
+window.onload = function loadpage(){
+	centerDiv();
+}
+
+window.onresize=function(){  
+	centerDiv();
+}  
+
+</script>
+
+</head>
+
+
+
+<body>
+
+<div id="total">
+
+    <div id="head"> 
+    	<div id="more" > 
+    		<a href="http://www.baidu.com">更多介绍>></a>
+    	</div>
+    </div>  <!--head -->
+
+    <div id="body">
+    	<div id="body-left">
+    	<img src="pic.gif">
+    	</div>  <!-- bodf-left -->
+
+    	<div id="body-right">
+    		<div id="logo"> </div>
+    		<div id="login"> 
+    			<table>
+    				<tr>
+    					<td >用户名：</td>
+    					<td align="left"><input class="input"> </input></td>
+    				</tr> 
+
+    				<tr >
+    					<td >密&nbsp&nbsp码：</td>
+    					<td align="left"><input class="input" type="password"> </input></td>
+    				</tr>     				
+
+    			</table>
+
+    			<div id="line"><img src="line.gif" alt="line" width="273" height="3" border="0" /> </div>
+
+    			<div id="login-bottom">
+    			<div style="float:left" class="login-button"> <input class="button1" type="button" onmouseover="this.className='button2'" onmouseout="this.className='button1'" value="登陆" > </div>
+    			<div style="float:left" class="login-button"> <input  class="button1" type="button" onmouseover="this.className='button2'" onmouseout="this.className='button1'" value="修改密码"> </div>
+    			<div style="float:left" class="login-button">  <input class="button1" type="button" onmouseover="this.className='button2'" onmouseout="this.className='button1'" value="找回密码"> </div>
+
+    			<div id="phone">客服热线：4006605555</div>
+    			</div>  <!-- login-botom -->
+
+
+    		</div>  <!-- login -->
+    	</div>   <!-- bodf-right -->
+    </div>   <!--body -->
+
+    <div id="bottom"> </div>  <!--bottom -->
+    <div id="copyright"> | COPYRIGHT &copy; 1999-2013 中企动力科技股份有限公司<div>
+
+
+</div> <!--total -->
+
+
+</body>
+</html>

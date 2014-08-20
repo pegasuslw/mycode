@@ -1,0 +1,14 @@
+import java.io.File;
+
+public class Client {
+	public static void main(String[] args){
+		//E:\mycode\java\eclipse4.4_workspace\FileNameFilter_test\src
+		File dir = new File(".");
+		String[] files = dir.list();
+		for(String name : files){
+			System.out.println(name);
+		}
+		
+		Strints javaFiles = new File();
+	}
+}
