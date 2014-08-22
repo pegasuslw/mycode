@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Properties;
 
 class NetworkAddr{
 	String name;
@@ -151,11 +152,24 @@ public class SysInfo{
     		e.printStackTrace();
     	}
     }
+
+	public void printOsInfo(){
+		Properties props = System.getProperties();
+		System.out.println("java version:" + props.getProperty("java.version"));
+		System.out.println("os name:" + props.getProperty("os.name"));
+		System.out.println("os version:" + props.getProperty("os.version"));
+		System.out.println("os arch:" + props.getProperty("os.arch"));
+		System.out.println("current user:" + props.getProperty("user.name"));
+	}
     
     public static void main(String[] args){
     	SysInfo sysInfo = new SysInfo();
-        //sysInfo.printFullAddrs();
-    	sysInfo.getIps();
-    	sysInfo.printFullAddrs();
+		
+		// print network information
+    	//sysInfo.getIps();
+    	//sysInfo.printFullAddrs();
+		
+		// print os info
+		sysInfo.printOsInfo();
     }
 }
