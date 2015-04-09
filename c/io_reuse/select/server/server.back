@@ -8,9 +8,10 @@
 #include <sys/select.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <arpa/inet.h>
 
 #define IPADDRESS   "127.0.0.1"
-#define PORT        8787
+#define PORT       2357 
 #define MAXLINE     1024
 #define LISTENQ     5
 
