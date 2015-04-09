@@ -1,4 +1,4 @@
-CFLAGS := -g
+CFLAGS := -std=c99
 
 SRC_FIES :=  $(wildcard *.c)
 OBJS     :=  $(patsubst %.c,%.o,$(SRC_FIES)) 
