@@ -1,3 +1,6 @@
+#This is user requirement of Muma software
+
+
 1> 获取系统信息
 1)操作系统信息
 2）cpu架构信息
