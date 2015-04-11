@@ -1,4 +1,4 @@
-CFLAGS :=
+CFLAGS := -g
 
 SRC_FIES :=  $(wildcard *.c)
 OBJS     :=  $(patsubst %.c,%.o,$(SRC_FIES)) 
@@ -13,5 +13,5 @@ $(TARGET): $(OBJS)
 	gcc $(CFLAGS) $(OBJS) -o $@
 
 clean:
-	rm -f $(TARGET)
-	rm -f *.o
+	@rm -f *.o
+	@rm -f $(TARGET)
