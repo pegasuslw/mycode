@@ -1,7 +1,9 @@
 package com.tcl.geoquiz;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class QuizActivity extends ActionBarActivity {
+	
+	private static String TAG = "QuizActivity";
+	private  String Key_Index = "index";
+	
 	private TextView mQuestion;
 	private Question[] mQuestions = new Question[]{
 			new Question(R.string.question_xian, true),
@@ -29,6 +35,7 @@ public class QuizActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d(TAG, "on create()...");
 		setContentView(R.layout.activity_quiz);
 		
 		mQuestion = (TextView)findViewById(R.id.question_text_view);
@@ -83,8 +90,43 @@ public class QuizActivity extends ActionBarActivity {
 				showNextQuestion();
 			}
 		});
+		
+		if(null != savedInstanceState){
+			mQuestionIndex =savedInstanceState.getInt(Key_Index);
+			updateQuestion();
+		}
+		
 	}
 	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		Log.d(TAG, "onDestroy()...");
+	}
+	
+	@Override
+	public void onStart(){
+		super.onStart();
+		Log.d(TAG, "onStart()...");
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		Log.d(TAG, "onStop()...");
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		Log.d(TAG, "onResume()...");
+	}
+	
+	@Override
+	public void onPause(){
+		super.onPause();
+		Log.d(TAG,"onPause()...");
+	}
 	private void judge(boolean select){
 		if (mQuestions[mQuestionIndex].isCorrect() == select){
 			Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
@@ -95,11 +137,15 @@ public class QuizActivity extends ActionBarActivity {
 	
 	private void showPrevQuestion(){
 		mQuestionIndex = (mQuestionIndex+mQuestions.length -1 )% mQuestions.length;
-		mQuestion.setText(mQuestions[mQuestionIndex].getQuestion());
+		updateQuestion();
 	}
 	private void showNextQuestion(){
 		mQuestionIndex = (mQuestionIndex + 1) % mQuestions.length;
-		mQuestion.setText(mQuestions[mQuestionIndex].getQuestion());
+		updateQuestion();
+	}
+	
+	private void updateQuestion(){
+		mQuestion.setText(mQuestions[mQuestionIndex].getQuestion());		
 	}
 
 	@Override
@@ -120,4 +166,13 @@ public class QuizActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	public void onSaveInstanceState(Bundle saveInstanceState){
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(saveInstanceState);
+		Log.d(TAG, "onSaveInstanceState()...");
+		saveInstanceState.putInt(Key_Index, mQuestionIndex);
+	}
+	
 }
