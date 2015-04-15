@@ -153,10 +153,10 @@ void handle_connection(int* client_fds, int maxi,fd_set* prset, fd_set* pall_set
                 close(client_fds[i]);
                 FD_CLR(client_fds[i], pall_set);
                 client_fds[i] = -1;
-                printf("receivec from client %d bytes \n", read_bytes);
+                printf("client closed \n");
                 continue;
             }
-            printf("frome cliet msg:%s", buf);
+            printf("from client msg:%s", buf);
 
             write(client_fds[i], buf, read_bytes);
         }   
