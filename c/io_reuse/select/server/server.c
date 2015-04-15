@@ -118,7 +118,9 @@ int do_select(int listen_fd){
                 continue;
             }
 
+            // 把client连接的fd也 监听起来
             FD_SET(con_fd, &all_set);
+            // 更新select的第一个参数，即所有fd中的最大值
             max_fd = (con_fd > max_fd ?  con_fd : max_fd);
 
             maxi = (i > maxi ? i : maxi);
