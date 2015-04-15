@@ -67,7 +67,7 @@ int do_select(int listen_fd){
     int con_fd = -1;
     int i = 0;
     int maxi = 0;
-    int client_fds[MAX_CLIENT_NUM] = {-1};
+    int client_fds[MAX_CLIENT_NUM] ;
 
     fd_set rset, all_set;
     struct sockaddr_in client_addr;
@@ -78,6 +78,10 @@ int do_select(int listen_fd){
 
     max_fd = listen_fd;
     printf("listen_fd:%d\n", listen_fd);
+
+    for(i=0;i<MAX_CLIENT_NUM;i++){
+        client_fds[i] = -1;
+    }
 
     while(1){
         rset = all_set;
@@ -102,8 +106,9 @@ int do_select(int listen_fd){
             fprintf(stdout, "accept a new client:%s:%d\n", inet_ntoa(client_addr.sin_addr), client_addr.sin_port);
 
             for(i=0;i<MAX_CLIENT_NUM;i++){
-                if(client_fds[i] != -1){
+                if(client_fds[i] == -1){
                     client_fds[i] = con_fd;
+                    printf("i=%d,client_fds[%d]:%d\n",i,i,client_fds[i]);
                     break;
                 }
             }
@@ -117,8 +122,10 @@ int do_select(int listen_fd){
             max_fd = (con_fd > max_fd ?  con_fd : max_fd);
 
             maxi = (i > maxi ? i : maxi);
+            printf("----maxi: %d\n",maxi);
 
         }else{
+            printf("handle_connection\n");
             handle_connection(client_fds,maxi,&rset,&all_set);        
         }
     }
@@ -132,8 +139,9 @@ void handle_connection(int* client_fds, int maxi,fd_set* prset, fd_set* pall_set
     char buf[1024] = {0};
     int i = 0;
     unsigned int read_bytes = 0;
+    printf("maxi = %d\n", maxi);
 
-    for(i=0;i<maxi;i++){
+    for(i=0;i<=maxi;i++){
         if(client_fds[i] < 0){
             continue;
         }
@@ -143,6 +151,7 @@ void handle_connection(int* client_fds, int maxi,fd_set* prset, fd_set* pall_set
                 close(client_fds[i]);
                 FD_CLR(client_fds[i], pall_set);
                 client_fds[i] = -1;
+                printf("receivec from client %d bytes \n", read_bytes);
                 continue;
             }
             printf("frome cliet msg:%s", buf);
