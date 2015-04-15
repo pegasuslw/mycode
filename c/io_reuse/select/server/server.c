@@ -21,19 +21,10 @@
 #define LISTEN_PORT      2357
 #define MAX_CLIENT_NUM   16
 
-int main(int argc, int* argv[])
-{
 
-    int listen_fd = socket_bind(SERVER_IP,LISTEN_PORT);
-    if(listen_fd <=0){
-        perror("bind error");
-        return -1;
-    }
-	listen(listen_fd, 5);
-    do_select(listen_fd);
-
-    return 0;
-}
+static int socket_bind(char* ip, int port);
+static int do_select(int listen_fd);
+static void handle_connection(int* client_fds, int maxi,fd_set* prset, fd_set* pall_set);
 
 int socket_bind(char* ip, int port){
     int ret = -1;
@@ -128,7 +119,7 @@ int do_select(int listen_fd){
 
         }else{
             printf("handle_connection\n");
-            handle_connection(client_fds,maxi,&rset,&all_set);        
+            handle_connection((int*)client_fds,maxi,&rset,&all_set);        
         }
     }
 
@@ -161,4 +152,18 @@ void handle_connection(int* client_fds, int maxi,fd_set* prset, fd_set* pall_set
             write(client_fds[i], buf, read_bytes);
         }   
     }
+}
+
+int main(int argc, int* argv[])
+{
+
+    int listen_fd = socket_bind(SERVER_IP,LISTEN_PORT);
+    if(listen_fd <=0){
+        perror("bind error");
+        return -1;
+    }
+	listen(listen_fd, 5);
+    do_select(listen_fd);
+
+    return 0;
 }

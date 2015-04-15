@@ -1,11 +1,12 @@
 CFLAGS := -g
 
 SRC_FILES :=  $(wildcard *.c)
+SRC_FILES := $(filter-out %.back.c,$(SRC_FILES))  # 不编译*.back.c文件
+OBJS     :=  $(patsubst %.c,%.o,$(SRC_FILES)) 
+
 CUR_DIR  :=  $(shell pwd)
 TARGET   :=  $(notdir $(CUR_DIR))
 
-SRC_FILES := $(filter-out $(TARGET).back%,$(SRC_FILES))  # 不编译*.back.c文件
-OBJS     :=  $(patsubst %.c,%.o,$(SRC_FILES)) 
 
 .PHONY: all clean
 
