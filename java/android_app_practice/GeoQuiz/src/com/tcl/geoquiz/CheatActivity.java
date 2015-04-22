@@ -1,6 +1,7 @@
 package com.tcl.geoquiz;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -16,6 +17,8 @@ public static String EXTRA_ANSWER_SHOWN = "com.tcl.geoquiz.anshwer_shown";
 private boolean mAnswer;
 private TextView mAnswerTextView;
 private Button mShowAnswerButton;
+private TextView mApiTextView;
+private TextView mOsVersionTextView;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,12 @@ protected void onCreate(Bundle savedInstanceState) {
 			//finish();
 		}
 	});
+	
+	mApiTextView = (TextView)findViewById(R.id.apiTextView);
+	mApiTextView.setText("API Level " + Build.VERSION.SDK_INT);
+	
+	mOsVersionTextView = (TextView)findViewById(R.id.osVersionextView);
+	mOsVersionTextView.setText("android " + Build.VERSION.RELEASE);
 }
 
 private void setAnswerShownResult(boolean isAnswerShown){
