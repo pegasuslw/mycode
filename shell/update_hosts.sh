@@ -61,11 +61,12 @@ do
     fi
 done
 
+i=1
 for d in ${SUC_DIR[@]}
 do
-    echo -n 1." "
+    echo -n ${i}." "
     echo ${d}
-
+    i=$[i+1]
 done
 
 if [ 11 == ${#SUC_DIR[@]}  ]; then
