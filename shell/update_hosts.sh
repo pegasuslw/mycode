@@ -14,9 +14,9 @@ GIT_REPO_DIR=~/hosts_git
 if [ ! -d ${GIT_REPO_DIR} ]; then
     git clone https://coding.net/u/levi/p/imouto-host/git ${GIT_REPO_DIR}/git
 else
-    pushd ${GIT_REPO_DIR}/git
+    pushd ${GIT_REPO_DIR}/git > /dev/null
     git pull
-    popd
+    popd > /dev/null
 fi
 
 if [ "$?" != "0" ]; then
@@ -24,19 +24,39 @@ if [ "$?" != "0" ]; then
     exit
 fi
 
-pushd ${GIT_REPO_DIR}/git
+pushd ${GIT_REPO_DIR}/git > /dev/null
 
 SUC_DIR=()   #定义可以成功连上google的目录数组 
+ALL_DIRS=()
 
-for DIR in `ls`
+#for DIR in `ls`
+ls > my_dirs
+
+while read -r DIR
 do
-    if [ ! -d ${DIR} ]; then  ## 不是目录, 忽略本次循环
+    ALL_DIRS=("${ALL_DIRS[@]}" "${DIR}")
+done < my_dirs
+
+
+#echo ===================================
+#echo ${ALL_DIRS[@]}
+#echo ===================================
+
+
+#:<<BLOCK
+#while read -r DIR # 解决无法编译带空格的目录 的问题
+for index in ${!ALL_DIRS[@]}
+do
+    DIR=${ALL_DIRS[$index]}
+
+    if [ ! -d "${DIR}" ]; then  ## 不是目录, 忽略本次循环
         continue
     fi
 
-    pushd ${DIR}
+    pushd "${DIR}" > /dev/null
+
     if [ "$?" -ne "0" ]; then
-        #popd
+        echo "进入${DIR}失败"
         continue          # 进入目录失败
     else
         if [ ! -w /etc/hosts ];then
@@ -45,51 +65,54 @@ do
         echo "127.0.0.1 localhost" > /etc/hosts
         echo "127.0.0.1 ${HOSTNAME}" >> /etc/hosts
         cat hosts >> /etc/hosts 
-        echo 现在用的是的hosts是:${DIR}
-        #ping www.google.com -c 2
-        if [ "$?" == "0" ]; then
-            #telnet www.google.com 443 | grep "Escape"
-
+        if [ "$?" == "0" ];then # 目录下没有hosts文件
+            echo 正在测试的hosts是:"${DIR}"
+#            ping www.google.com -c 1
             nc -w 1 www.google.com 443
             if [ "$?" == "0" ]; then
                 echo "与google已通！ ^_^"
-                #break  # 测试通了就返回，否则继续寻找通的host
-                SUC_DIR=("${SUC_DIR[@]}" ${DIR})
+                SUC_DIR=("${SUC_DIR[@]}" "${DIR}")
             fi
-         fi
-        popd  # 回到git目录下
+        fi ## endif cat hosts文件 失败
+        popd > /dev/null
+
     fi
-done
+done 
 
 i=1
-for d in ${SUC_DIR[@]}
+echo =======================
+for index in ${!SUC_DIR[@]}
 do
     echo -n ${i}." "
-    echo ${d}
+    echo ${SUC_DIR[$index]}
     i=$[i+1]
 done
+echo =======================
 
-if [ 11 == ${#SUC_DIR[@]}  ]; then
-    pushd ${SUC_DIR[0]} 
+if [ 0 == ${#SUC_DIR[@]}  ]; then #如果只有一个目录，那么就直接就用了，不需要用户去选择
+    echo "没有找到合适的hosts :("
+    exit
+elif [ 1 == ${#SUC_DIR[@]}  ]; then #如果只有一个目录，那么就直接就用了，不需要用户去选择
+    pushd "${SUC_DIR[0]}"
 
     echo "127.0.0.1 localhost" > /etc/hosts
     echo "127.0.0.1 ${HOSTNAME}" >> /etc/hosts
     cat hosts >> /etc/hosts 
-    popd
+    popd > /dev/null
 else
     echo "请选择你的输入:"
     read line
     line=$[line-1]
 
-    pushd  ${SUC_DIR[${line}]} 
+    pushd  "${SUC_DIR[${line}]}"
 
     echo "127.0.0.1 localhost" > /etc/hosts
     echo "127.0.0.1 ${HOSTNAME}" >> /etc/hosts
     cat hosts >> /etc/hosts 
 
-    popd
+    popd > /dev/null
 
 fi
 
-
+#BLOCK
 pushd  > /dev/null  ## 弹出 ~/hosts_git/git目录
