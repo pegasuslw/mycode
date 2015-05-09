@@ -2,11 +2,14 @@ package com.tcl.hellomoon;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class AudioPlayer {
 
+	private String TAG = "AudioPlayer";
 	private MediaPlayer mPlayer;
+	
 	
 	public void play(Context context){
 		if(mPlayer == null){
@@ -16,7 +19,8 @@ public class AudioPlayer {
 				
 				@Override
 				public void onCompletion(MediaPlayer mp) {
-					mPlayer.stop();
+					Log.d(TAG, "onCompletion");
+					AudioPlayer.this.stop();
 				}
 			});
 		}

@@ -17,6 +17,12 @@ public class HelloMoonFragment extends Fragment {
 	private static String TAG = "HelloMoonFragment";
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+	}
+	
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
